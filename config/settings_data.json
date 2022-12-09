@@ -3,9 +3,9 @@
   "presets": {
     "Default": {
       "colors_solid_button_labels": "#ffffff",
-      "colors_accent_1": "#121212",
+      "colors_accent_1": "#0088F0",
       "gradient_accent_1": "",
-      "colors_accent_2": "#334fb4",
+      "colors_accent_2": "#172755",
       "gradient_accent_2": "",
       "colors_text": "#121212",
       "colors_outline_button_labels": "#121212",
@@ -133,16 +133,14 @@
               }
             }
           },
-          "block_order": [
-            "announcement-bar-0"
-          ]
+          "block_order": ["announcement-bar-0"]
         },
         "header": {
           "type": "header",
           "settings": {
             "color_scheme": "background-1",
             "logo_width": 90,
-            "logo_position": "middle-left",
+            "logo_position": "top-left",
             "menu": "main-menu",
             "show_line_separator": true,
             "enable_sticky_header": true,
@@ -170,15 +168,11 @@
               "type": "text",
               "settings": {
                 "heading": "Our mission",
-                "subtext": "<p>Share contact information, store details, and brand content with your customers.<\/p>"
+                "subtext": "<p>Share contact information, store details, and brand content with your customers.</p>"
               }
             }
           },
-          "block_order": [
-            "footer-0",
-            "footer-1",
-            "footer-2"
-          ],
+          "block_order": ["footer-0", "footer-1", "footer-2"],
           "settings": {
             "color_scheme": "background-1",
             "newsletter_enable": true,
