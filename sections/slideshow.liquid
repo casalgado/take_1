@@ -231,7 +231,7 @@
   </slideshow-component>
   <aside class="product-spotlight">
     {%- for block in prod-blocks -%}
-      {% render 'card-product', card_product: block.settings.product, show_rating: true, show_vendor: true %}
+      {% render 'spotlight-card', card_product: block.settings.product, show_rating: true, show_vendor: true %}
     {%- endfor -%}
   </aside>
 </div>
