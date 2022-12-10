@@ -29,9 +29,9 @@
   {%- endstyle -%}
 {%- endif -%}
 
-<div class="custom-slideshow">
+<div class="custom-slideshow-container">
   <slideshow-component
-    class="slider-mobile-gutter page-width{% if section.settings.show_text_below %} mobile-text-below{% endif %}"
+    class="slider-mobile-gutter {% if section.settings.show_text_below %} mobile-text-below{% endif %} custom-slideshow"
     role="region"
     aria-roledescription="{{ 'sections.slideshow.carousel' | t }}"
     aria-label="{{ section.settings.accessibility_info | escape }}"
@@ -231,7 +231,7 @@
   </slideshow-component>
   <aside class="product-spotlight">
     {%- for block in prod-blocks -%}
-      {% render 'card-product', card_product: block.settings.product %}
+      {% render 'card-product', card_product: block.settings.product, show_rating: true, show_vendor: true %}
     {%- endfor -%}
   </aside>
 </div>
@@ -251,10 +251,6 @@
       "id": "slide_height",
       "options": [
         {
-          "value": "adapt_image",
-          "label": "t:sections.slideshow.settings.slide_height.options__1.label"
-        },
-        {
           "value": "small",
           "label": "t:sections.slideshow.settings.slide_height.options__2.label"
         },
@@ -267,7 +263,7 @@
           "label": "t:sections.slideshow.settings.slide_height.options__4.label"
         }
       ],
-      "default": "adapt_image",
+      "default": "medium",
       "label": "t:sections.slideshow.settings.slide_height.label"
     },
     {

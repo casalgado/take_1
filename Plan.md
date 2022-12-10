@@ -56,3 +56,7 @@
     - details page
   - cart page
   - footer
+
+## Questions
+
+- why does overflow: hidden work to resize slider? Is this a good practice? (custom-slideshow.css)

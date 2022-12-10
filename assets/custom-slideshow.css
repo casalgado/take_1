@@ -1,9 +1,44 @@
-.custom-slideshow {
+.custom-slideshow-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  margin: 40px;
+}
+
+.custom-slideshow {
+  overflow: hidden;
 }
 
 .product-spotlight {
   display: grid;
+  gap: 20px;
   grid-template-columns: 1fr 1fr;
+}
+
+.price-spotlight {
+  font-weight: bolder;
+}
+
+.border {
+  border: 1px solid red;
+}
+
+.spotlight-image-container img {
+  max-width: 50% !important;
+  height: 40% !important;
+}
+
+.spotlight-badge {
+  position: absolute;
+  right: 10px;
+  top: 0px;
+}
+
+.spotlight-content {
+  position: relative;
+  padding: 0px 10px 20px 10px;
+}
+
+.background-white {
+  background-color: white !important;
 }
