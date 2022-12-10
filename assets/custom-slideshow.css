@@ -1,0 +1,9 @@
+.custom-slideshow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.product-spotlight {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
