@@ -6,47 +6,33 @@
 {% assign slide-blocks = section.blocks | where: 'type', 'slide' %}
 {% assign prod-blocks = section.blocks | where: 'type', 'product-spotlight' %}
 
-{%- if section.settings.slide_height == 'adapt_image' and slide-blocks.first.settings.image != blank -%}
-  {%- style -%}
-    @media screen and (max-width: 749px) {
-      #Slider-{{ section.id }}::before,
-      #Slider-{{ section.id }} .media::before,
-      #Slider-{{ section.id }}:not(.banner--mobile-bottom) .banner__content::before {
-        padding-bottom: {{ 1 | divided_by: slide-blocks.first.settings.image.aspect_ratio | times: 100 }}%;
-        content: '';
-        display: block;
-      }
-    }
-
-    @media screen and (min-width: 750px) {
-      #Slider-{{ section.id }}::before,
-      #Slider-{{ section.id }} .media::before {
-        padding-bottom: {{ 1 | divided_by: slide-blocks.first.settings.image.aspect_ratio | times: 100 }}%;
-        content: '';
-        display: block;
-      }
-    }
-  {%- endstyle -%}
-{%- endif -%}
-
 <div class="custom-slideshow-container">
   <slideshow-component
-    class="slider-mobile-gutter {% if section.settings.show_text_below %} mobile-text-below{% endif %} custom-slideshow"
+    class="slider-mobile-gutter custom-slideshow"
     role="region"
     aria-roledescription="{{ 'sections.slideshow.carousel' | t }}"
     aria-label="{{ section.settings.accessibility_info | escape }}"
   >
-    {%- if section.settings.auto_rotate and slide-blocks.size > 1 -%}
-      <div class="slideshow__controls slideshow__controls--top slider-buttons no-js-hidden{% if section.settings.show_text_below %} slideshow__controls--border-radius-mobile{% endif %}">
-        <button
-          type="button"
-          class="slider-button slider-button--prev"
-          name="previous"
-          aria-label="{{ 'sections.slideshow.previous_slideshow' | t }}"
-          aria-controls="Slider-{{ section.id }}"
-        >
-          {% render 'icon-caret' %}
-        </button>
+    {%- if slide-blocks.size > 1 -%}
+      <button
+        type="button"
+        class="custom-slider-button custom-slider-button--prev slider-button slider-button--prev"
+        name="previous"
+        aria-label="{{ 'sections.slideshow.previous_slideshow' | t }}"
+        aria-controls="Slider-{{ section.id }}"
+      >
+        {% render 'icon-caret' %}
+      </button>
+      <button
+        type="button"
+        class="custom-slider-button custom-slider-button--next slider-button slider-button--next"
+        name="next"
+        aria-label="{{ 'sections.slideshow.next_slideshow' | t }}"
+        aria-controls="Slider-{{ section.id }}"
+      >
+        {% render 'icon-caret' %}
+      </button>
+      <div class="slideshow__controls slideshow__controls--top slider-buttons no-js-hidden">
         <div class="slider-counter slider-counter--dots">
           <div class="slideshow__control-wrapper">
             {%- for block in slide-blocks -%}
@@ -60,26 +46,15 @@
             {%- endfor -%}
           </div>
         </div>
+
         <button
           type="button"
-          class="slider-button slider-button--next"
-          name="next"
-          aria-label="{{ 'sections.slideshow.next_slideshow' | t }}"
-          aria-controls="Slider-{{ section.id }}"
+          class="slideshow__autoplay slider-button no-js-hidden{% if section.settings.auto_rotate == false %} slideshow__autoplay--paused{% endif %}"
+          aria-label="{{ 'sections.slideshow.pause_slideshow' | t }}"
         >
-          {% render 'icon-caret' %}
+          {%- render 'icon-pause' -%}
+          {%- render 'icon-play' -%}
         </button>
-
-        {%- if section.settings.auto_rotate -%}
-          <button
-            type="button"
-            class="slideshow__autoplay slider-button no-js-hidden{% if section.settings.auto_rotate == false %} slideshow__autoplay--paused{% endif %}"
-            aria-label="{{ 'sections.slideshow.pause_slideshow' | t }}"
-          >
-            {%- render 'icon-pause' -%}
-            {%- render 'icon-play' -%}
-          </button>
-        {%- endif -%}
       </div>
       <noscript>
         <div class="slider-buttons">
@@ -99,11 +74,11 @@
     {%- endif -%}
 
     <div
-      class="slideshow banner banner--{{ section.settings.slide_height }} grid grid--1-col slider slider--everywhere{% if section.settings.show_text_below %} banner--mobile-bottom{% endif %}{% if slide-blocks.first.settings.image == blank %} slideshow--placeholder{% endif %}"
+      class="slideshow banner banner--medium grid grid--1-col slider slider--everywhere{% if section.settings.show_text_below %} banner--mobile-bottom{% endif %}{% if slide-blocks.first.settings.image == blank %} slideshow--placeholder{% endif %}"
       id="Slider-{{ section.id }}"
       aria-live="polite"
       aria-atomic="true"
-      data-autoplay="{{ section.settings.auto_rotate }}"
+      data-autoplay="true"
       data-speed="{{ section.settings.change_slides_speed }}"
     >
       {%- for block in slide-blocks -%}
@@ -137,97 +112,72 @@
               {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
             {%- endif -%}
           </div>
-          <div class="slideshow__text-wrapper banner__content banner__content--{{ block.settings.box_align }} page-width{% if block.settings.show_text_box == false %} banner--desktop-transparent{% endif %}">
-            <div class="slideshow__text banner__box content-container content-container--full-width-mobile color-{{ block.settings.color_scheme }} gradient slideshow__text--{{ block.settings.text_alignment }} slideshow__text-mobile--{{ block.settings.text_alignment_mobile }}">
-              {%- if block.settings.heading != blank -%}
-                <h2 class="banner__heading {{ block.settings.heading_size }}">{{ block.settings.heading | escape }}</h2>
-              {%- endif -%}
-              {%- if block.settings.subheading != blank -%}
-                <div class="banner__text" {{ block.shopify_attributes }}>
-                  <span>{{ block.settings.subheading | escape }}</span>
-                </div>
-              {%- endif -%}
-              {%- if block.settings.button_label != blank -%}
-                <div class="banner__buttons">
-                  <a
-                    {% if block.settings.link %}
-                      href="{{ block.settings.link }}"
-                    {% else %}
-                      role="link" aria-disabled="true"
-                    {% endif %}
-                    class="button {% if block.settings.button_style_secondary %}button--secondary{% else %}button--primary{% endif %}"
-                  >
-                    {{- block.settings.button_label | escape -}}
-                  </a>
-                </div>
-              {%- endif -%}
-            </div>
-          </div>
         </div>
       {%- endfor -%}
     </div>
-
-    {%- if slide-blocks.size > 1 and section.settings.auto_rotate == false -%}
-      <div class="slideshow__controls slider-buttons no-js-hidden{% if section.settings.show_text_below %} slideshow__controls--border-radius-mobile{% endif %}">
-        <button
-          type="button"
-          class="slider-button slider-button--prev"
-          name="previous"
-          aria-label="{{ 'sections.slideshow.previous_slideshow' | t }}"
-          aria-controls="Slider-{{ section.id }}"
-        >
-          {% render 'icon-caret' %}
-        </button>
-        <div class="slider-counter slider-counter--dots">
-          <div class="slideshow__control-wrapper">
-            {%- for block in slide-blocks -%}
-              <button
-                class="slider-counter__link slider-counter__link--dots link"
-                aria-label="{{ 'sections.slideshow.load_slide' | t }} {{ forloop.index }} {{ 'general.slider.of' | t }} {{ forloop.length }}"
-                aria-controls="Slider-{{ section.id }}"
-              >
-                <span class="dot"></span>
-              </button>
-            {%- endfor -%}
-          </div>
-        </div>
-        <button
-          type="button"
-          class="slider-button slider-button--next"
-          name="next"
-          aria-label="{{ 'sections.slideshow.next_slideshow' | t }}"
-          aria-controls="Slider-{{ section.id }}"
-        >
-          {% render 'icon-caret' %}
-        </button>
-
-        {%- if section.settings.auto_rotate -%}
+    {% comment %}
+      {%- if slide-blocks.size > 1 and section.settings.auto_rotate == false -%}
+        <div class="slideshow__controls slider-buttons no-js-hidden">
           <button
             type="button"
-            class="slideshow__autoplay slider-button no-js-hidden{% if section.settings.auto_rotate == false %} slideshow__autoplay--paused{% endif %}"
-            aria-label="{{ 'sections.slideshow.pause_slideshow' | t }}"
+            class="slider-button slider-button--prev"
+            name="previous"
+            aria-label="{{ 'sections.slideshow.previous_slideshow' | t }}"
+            aria-controls="Slider-{{ section.id }}"
           >
-            {%- render 'icon-pause' -%}
-            {%- render 'icon-play' -%}
+            {% render 'icon-caret' %}
           </button>
-        {%- endif -%}
-      </div>
-      <noscript>
-        <div class="slider-buttons">
-          <div class="slider-counter">
-            {%- for block in slide-blocks -%}
-              <a
-                href="#Slide-{{ section.id }}-{{ forloop.index }}"
-                class="slider-counter__link link"
-                aria-label="{{ 'sections.slideshow.load_slide' | t }} {{ forloop.index }} {{ 'general.slider.of' | t }} {{ forloop.length }}"
-              >
-                {{ forloop.index }}
-              </a>
-            {%- endfor -%}
+          <div class="slider-counter slider-counter--dots">
+            <div class="slideshow__control-wrapper">
+              {%- for block in slide-blocks -%}
+                <button
+                  class="slider-counter__link slider-counter__link--dots link"
+                  aria-label="{{ 'sections.slideshow.load_slide' | t }} {{ forloop.index }} {{ 'general.slider.of' | t }} {{ forloop.length }}"
+                  aria-controls="Slider-{{ section.id }}"
+                >
+                  <span class="dot"></span>
+                </button>
+              {%- endfor -%}
+            </div>
           </div>
+          <button
+            type="button"
+            class="slider-button slider-button--next"
+            name="next"
+            aria-label="{{ 'sections.slideshow.next_slideshow' | t }}"
+            aria-controls="Slider-{{ section.id }}"
+          >
+            {% render 'icon-caret' %}
+          </button>
+
+          {%- if section.settings.auto_rotate -%}
+            <button
+              type="button"
+              class="slideshow__autoplay slider-button no-js-hidden{% if section.settings.auto_rotate == false %} slideshow__autoplay--paused{% endif %}"
+              aria-label="{{ 'sections.slideshow.pause_slideshow' | t }}"
+            >
+              {%- render 'icon-pause' -%}
+              {%- render 'icon-play' -%}
+            </button>
+          {%- endif -%}
         </div>
-      </noscript>
-    {%- endif -%}
+        <noscript>
+          <div class="slider-buttons">
+            <div class="slider-counter">
+              {%- for block in slide-blocks -%}
+                <a
+                  href="#Slide-{{ section.id }}-{{ forloop.index }}"
+                  class="slider-counter__link link"
+                  aria-label="{{ 'sections.slideshow.load_slide' | t }} {{ forloop.index }} {{ 'general.slider.of' | t }} {{ forloop.length }}"
+                >
+                  {{ forloop.index }}
+                </a>
+              {%- endfor -%}
+            </div>
+          </div>
+        </noscript>
+      {%- endif -%}
+    {% endcomment %}
   </slideshow-component>
   <aside class="product-spotlight">
     {%- for block in prod-blocks -%}
@@ -247,32 +197,6 @@
   "class": "section",
   "settings": [
     {
-      "type": "select",
-      "id": "slide_height",
-      "options": [
-        {
-          "value": "small",
-          "label": "t:sections.slideshow.settings.slide_height.options__2.label"
-        },
-        {
-          "value": "medium",
-          "label": "t:sections.slideshow.settings.slide_height.options__3.label"
-        },
-        {
-          "value": "large",
-          "label": "t:sections.slideshow.settings.slide_height.options__4.label"
-        }
-      ],
-      "default": "medium",
-      "label": "t:sections.slideshow.settings.slide_height.label"
-    },
-    {
-      "type": "checkbox",
-      "id": "auto_rotate",
-      "label": "t:sections.slideshow.settings.auto_rotate.label",
-      "default": false
-    },
-    {
       "type": "range",
       "id": "change_slides_speed",
       "min": 3,
@@ -281,27 +205,6 @@
       "unit": "s",
       "label": "t:sections.slideshow.settings.change_slides_speed.label",
       "default": 5
-    },
-    {
-      "type": "header",
-      "content": "t:sections.slideshow.settings.mobile.content"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_text_below",
-      "label": "t:sections.slideshow.settings.show_text_below.label",
-      "default": true
-    },
-    {
-      "type": "header",
-      "content": "t:sections.slideshow.settings.accessibility.content"
-    },
-    {
-      "type": "text",
-      "id": "accessibility_info",
-      "label": "t:sections.slideshow.settings.accessibility.label",
-      "info": "t:sections.slideshow.settings.accessibility.info",
-      "default": "Slideshow about our brand"
     }
   ],
   "blocks": [
