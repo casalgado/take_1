@@ -6,7 +6,7 @@
 {% assign slide-blocks = section.blocks | where: 'type', 'slide' %}
 {% assign prod-blocks = section.blocks | where: 'type', 'product-spotlight' %}
 
-<div class="custom-slideshow-container">
+<div class="custom-slideshow__container">
   <slideshow-component
     class="slider-mobile-gutter custom-slideshow"
     role="region"
@@ -16,7 +16,7 @@
     {%- if slide-blocks.size > 1 -%}
       <button
         type="button"
-        class="custom-slider-button custom-slider-button--prev slider-button slider-button--prev"
+        class="custom-slider__button custom-slider__button--prev slider-button slider-button--prev"
         name="previous"
         aria-label="{{ 'sections.slideshow.previous_slideshow' | t }}"
         aria-controls="Slider-{{ section.id }}"
@@ -25,7 +25,7 @@
       </button>
       <button
         type="button"
-        class="custom-slider-button custom-slider-button--next slider-button slider-button--next"
+        class="custom-slider__button custom-slider__button--next slider-button slider-button--next"
         name="next"
         aria-label="{{ 'sections.slideshow.next_slideshow' | t }}"
         aria-controls="Slider-{{ section.id }}"
@@ -179,7 +179,7 @@
       {%- endif -%}
     {% endcomment %}
   </slideshow-component>
-  <aside class="product-spotlight">
+  <aside class="spotlight__wrapper">
     {%- for block in prod-blocks -%}
       {% render 'spotlight-card', card_product: block.settings.product, show_rating: true, show_vendor: true %}
     {%- endfor -%}

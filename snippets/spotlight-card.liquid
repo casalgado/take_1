@@ -23,9 +23,9 @@
 
 {%- if card_product and card_product != empty -%}
   <div
-    class="spotlight-card"
+    class="spotlight__card"
   >
-    <div class="spotlight-media">
+    <div class="spotlight__media">
       {% comment %}theme-check-disable ImgLazyLoading{% endcomment %}
       <img
         src="{{ card_product.featured_media | image_url }}"
@@ -34,7 +34,7 @@
       >
       {% comment %}theme-check-enable ImgLazyLoading{% endcomment %}
     </div>
-    <div class="spotlight-content">
+    <div class="spotlight__content">
       <div class="card__information">
         {%- if show_vendor -%}
           <span class="visually-hidden">{{ 'accessibility.vendor' | t }}</span>
@@ -91,9 +91,9 @@
           </p>
         {%- endif -%}
 
-        {% render 'price', product: card_product, price_class: 'price-spotlight' %}
+        {% render 'price', product: card_product, price_class: 'spotlight__price' %}
       </div>
-      <div class="card__badge spotlight-badge">
+      <div class="card__badge spotlight__badge">
         {%- if card_product.available == false -%}
           <span
             id="Badge-{{ section_id }}-{{ card_product.id }}"
@@ -115,14 +115,14 @@
 
 {%- else -%}
   <div
-    class="spotlight-card background-white"
+    class="spotlight__card"
   >
-    <div class="spotlight-media">
+    <div class="spotlight__media">
       {% comment %}theme-check-disable ImgLazyLoading{% endcomment %}
 
       {% comment %}theme-check-enable ImgLazyLoading{% endcomment %}
     </div>
-    <div class="spotlight-content">
+    <div class="spotlight__content">
       <div class="card__information">
         {%- if show_vendor -%}
           <span class="visually-hidden">{{ 'accessibility.vendor' | t }}</span>
