@@ -7,8 +7,10 @@
 ## Homepage
 
 - slider
+
   - are the highlighted products part of the slider section?
   - max 3 images
+
   - categorias para ti, cards should be customizable
     - change the image, and text.
   - icon section
