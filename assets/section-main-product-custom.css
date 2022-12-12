@@ -1,0 +1,33 @@
+.quantity__button .icon-minus path,
+.quantity__button .icon-plus path {
+  fill: gray;
+}
+
+.custom-card {
+  background-color: white !important;
+  border-radius: 16px;
+  box-shadow: var(--shadow-1);
+  flex-grow: 0;
+}
+
+.custom-product__wrapper {
+  gap: 10px !important;
+  align-items: flex-start !important;
+}
+
+.product__media,
+.product-media-container {
+  border-radius: 12px;
+}
+
+.custom-product__info-wrapper {
+  max-width: 100% !important;
+  width: 100% !important;
+  padding-bottom: 2em;
+}
+
+.block__title {
+  text-transform: capitalize;
+  border-bottom: 1px solid lightgray;
+  padding-bottom: 10px;
+}

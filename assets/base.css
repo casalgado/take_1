@@ -1,3 +1,12 @@
+:root {
+  /* box shadows */
+  --shadow-1: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  --shadow-2: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  --shadow-3: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  --shadow-4: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  --shadow-5: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
+}
+
 /* Color custom properties */
 
 :root,
@@ -1996,7 +2005,7 @@ input[type="checkbox"] {
 .quantity {
   color: rgba(var(--color-foreground));
   position: relative;
-  width: calc(14rem / var(--font-body-scale) + var(--inputs-border-width) * 2);
+  width: calc(12rem / var(--font-body-scale) + var(--inputs-border-width) * 2);
   display: flex;
   border-radius: var(--inputs-radius);
   min-height: calc((var(--inputs-border-width) * 2) + 4.5rem);
@@ -2019,7 +2028,6 @@ input[type="checkbox"] {
 }
 
 .quantity:before {
-  background: rgb(var(--color-background));
   pointer-events: none;
   content: "";
   position: absolute;
@@ -2042,6 +2050,8 @@ input[type="checkbox"] {
   text-align: center;
   background-color: transparent;
   border: 0;
+  border-right: 1px solid lightgray;
+  border-left: 1px solid lightgray;
   padding: 0 0.5rem;
   width: 100%;
   flex-grow: 1;
@@ -2050,11 +2060,11 @@ input[type="checkbox"] {
 }
 
 .quantity__button {
-  width: calc(4.5rem / var(--font-body-scale));
+  width: calc(3rem / var(--font-body-scale));
   flex-shrink: 0;
   font-size: 1.8rem;
   border: 0;
-  background-color: transparent;
+  background-color: white !important;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -2995,4 +3005,12 @@ details-disclosure > details {
   .localization-form__select:focus {
     outline: transparent solid 1px;
   }
+}
+
+.tbr {
+  border: 1px solid red !important;
+}
+
+.tbb {
+  border: 1px solid blue !important;
 }
