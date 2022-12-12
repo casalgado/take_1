@@ -56,11 +56,11 @@
 
   {% assign variant_images = product.images | where: 'attached_to_variant?', true | map: 'src' %}
 
-  <div class="custom-product__wrapper product product--{{ section.settings.media_size }} product--{{ section.settings.media_position }} product--{{ section.settings.gallery_layout }} product--mobile-{{ section.settings.mobile_thumbnails }} grid grid--1-col {% if product.media.size > 0 %}grid--2-col-tablet{% else %}product--no-media{% endif %}">
-    <div class="grid__item product__media-wrapper{% if section.settings.media_position == 'right' %} medium-hide large-up-hide{% endif %}">
+  <div class="custom-product__wrapper product product--medium product--left product--{{ section.settings.gallery_layout }} product--mobile-{{ section.settings.mobile_thumbnails }} grid grid--1-col {% if product.media.size > 0 %}grid--2-col-tablet{% else %}product--no-media{% endif %}">
+    <div class="grid__item product__media-wrapper">
       {% render 'product-media-gallery', variant_images: variant_images %}
       {% comment %} Column 1 {% endcomment %}
-      <div class="custom-card custom-product__info-wrapper product__info-wrapper{% if settings.page_width > 1400 and section.settings.media_size == "small" %} product__info-wrapper--extra-padding{% endif %}">
+      <div class="custom-card custom-product__info-wrapper product__info-wrapper">
         {%- for block in section.blocks -%}
           {%- case block.type -%}
             {%- when 'description' -%}
@@ -72,7 +72,7 @@
               {%- endif -%}
           {%- endcase -%}
         {%- endfor -%}
-        <h3 class="block__title">Especificacioness</h3>
+        <h3 class="block__title">Especificaciones</h3>
         <div class="custom__metafields--wrapper">
           {%- for field in product.metafields['custom'] -%}
             <div class="custom__metafields--item">
@@ -84,10 +84,10 @@
       </div>
     </div>
    
-    <div class="custom-card product__info-wrapper grid__item{% if settings.page_width > 1400 and section.settings.media_size == "small" %} product__info-wrapper--extra-padding{% endif %}">
+    <div class="custom-card product__info-wrapper grid__item">
       <div
         id="ProductInfo-{{ section.id }}"
-        class="product__info-container{% if section.settings.enable_sticky_info %} product__column-sticky{% endif %}"
+        class="product__info-container"
       >
         {%- assign product_form_id = 'product-form-' | append: section.id -%}
 
@@ -387,12 +387,6 @@
         </a>
       </div>
     </div>
-    {%- if section.settings.media_position == 'right' -%}
-      {% comment %} Duplicate gallery to display after product content on tablet/desktop breakpoint {% endcomment %}
-      <div class="grid__item product__media-wrapper small-hide">
-        {% render 'product-media-gallery', variant_images: variant_images, is_duplicate: true %}
-      </div>
-    {%- endif -%}
   </div>
 
   {% render 'product-media-modal' variant_images: variant_images %}
@@ -1842,36 +1836,9 @@
   ],
   "settings": [
     {
-      "type": "checkbox",
-      "id": "enable_sticky_info",
-      "default": false,
-      "label": "t:sections.main-product.settings.enable_sticky_info.label"
-    },
-    {
       "type": "header",
       "content": "t:sections.main-product.settings.header.content",
       "info": "t:sections.main-product.settings.header.info"
-    },
-    {
-      "type": "select",
-      "id": "media_size",
-      "options": [
-        {
-          "value": "small",
-          "label": "t:sections.main-product.settings.media_size.options__1.label"
-        },
-        {
-          "value": "medium",
-          "label": "t:sections.main-product.settings.media_size.options__2.label"
-        },
-        {
-          "value": "large",
-          "label": "t:sections.main-product.settings.media_size.options__3.label"
-        }
-      ],
-      "default": "large",
-      "label": "t:sections.main-product.settings.media_size.label",
-      "info": "t:sections.main-product.settings.media_size.info"
     },
     {
       "type": "checkbox",
@@ -1918,23 +1885,6 @@
       ],
       "default": "stacked",
       "label": "t:sections.main-product.settings.gallery_layout.label"
-    },
-    {
-      "type": "select",
-      "id": "media_position",
-      "options": [
-        {
-          "value": "left",
-          "label": "t:sections.main-product.settings.media_position.options__1.label"
-        },
-        {
-          "value": "right",
-          "label": "t:sections.main-product.settings.media_position.options__2.label"
-        }
-      ],
-      "default": "left",
-      "label": "t:sections.main-product.settings.media_position.label",
-      "info": "t:sections.main-product.settings.media_position.info"
     },
     {
       "type": "select",
