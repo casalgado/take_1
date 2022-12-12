@@ -60,18 +60,27 @@
     <div class="grid__item product__media-wrapper{% if section.settings.media_position == 'right' %} medium-hide large-up-hide{% endif %}">
       {% render 'product-media-gallery', variant_images: variant_images %}
       {% comment %} Column 1 {% endcomment %}
-      <div class="custom-card custom-product__info-wrapper product__info-wrapper{% if settings.page_width > 1400 and section.settings.media_size == "small" %} product__info-wrapper--extra-padding{% endif %}">        
+      <div class="custom-card custom-product__info-wrapper product__info-wrapper{% if settings.page_width > 1400 and section.settings.media_size == "small" %} product__info-wrapper--extra-padding{% endif %}">
         {%- for block in section.blocks -%}
           {%- case block.type -%}
             {%- when 'description' -%}
               {%- if product.description != blank -%}
-                <h3 class="block__title">{{block.type}}</h3>
+                <h3 class="block__title">Descripción</h3>
                 <div class="product__description rte quick-add-hidden" {{ block.shopify_attributes }}>
                   {{ product.description }}
                 </div>
               {%- endif -%}
           {%- endcase -%}
         {%- endfor -%}
+        <h3 class="block__title">Especificacioness</h3>
+        <div class="custom__metafields--wrapper">
+          {%- for field in product.metafields['custom'] -%}
+            <div class="custom__metafields--item">
+              <p> {{ field.first }}</p>
+              <p> {{ field.last }} {%- if field.first == "peso"-%}kg{%- endif -%}</p>
+            </div>
+          {%- endfor -%}
+        </div>
       </div>
     </div>
    
