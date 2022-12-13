@@ -1,0 +1,28 @@
+.cart__banner {
+  margin-top: 2rem;
+  background-color: white;
+  border: 1px solid transparent;
+  padding-left: 10rem;
+  padding-right: 10rem;
+}
+
+.custom__title--primary {
+  font-weight: bolder;
+  font-size: 2em;
+}
+
+.custom__cart__items {
+  background-color: white;
+  padding: 2rem;
+}
+
+.cart__banner--items {
+  margin-top: 0px;
+}
+
+.cart__banner--link,
+.cart__banner--link:visited,
+.cart__banner--link:focus {
+  color: rgb(var(--color-base-accent-1));
+  text-decoration: none;
+}
