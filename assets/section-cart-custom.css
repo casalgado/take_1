@@ -26,3 +26,36 @@
   color: rgb(var(--color-base-accent-1));
   text-decoration: none;
 }
+
+.custom__cart__checkout-button {
+  text-transform: uppercase;
+}
+
+.custom__cart__footer {
+  padding-top: 0px;
+}
+
+.cart__footer--subtitle {
+  font-weight: bold;
+}
+
+.cart__footer--card {
+  padding: 1rem 2rem 1rem 2rem !important;
+  flex-grow: 0;
+}
+
+.custom__totals {
+  align-items: center !important;
+}
+
+.custom__totals > * {
+  flex-grow: 1;
+}
+
+.custom__totals > *:first-child {
+  vertical-align: middle;
+}
+
+.custom__totals > *:last-child {
+  text-align: right;
+}

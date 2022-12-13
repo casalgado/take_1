@@ -46,19 +46,12 @@
 
 ## To do
 
-- set theme colors and other css variables
-- create 4 test products, each in a different category, with all properties
-- order:
-  - homepage
-    - header
-    - slider
-    - icons
-    - final section
-  - products
-    - details page
-  - cart page
-  - footer
+- fix qty button bug on focus
+- finish button layout on product
+- direct to cart button ?
 
 ## Questions
 
 - why does overflow: hidden work to resize slider? Is this a good practice? (custom-slideshow.css)
+- how do merchants organize their products/categories/vendors?
+- how are shopify stores made with vue?
