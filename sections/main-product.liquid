@@ -12,6 +12,8 @@
   {{ 'component-rating.css' | asset_url | stylesheet_tag }}
   {{ 'component-loading-overlay.css' | asset_url | stylesheet_tag }}
   {{ 'component-deferred-media.css' | asset_url | stylesheet_tag }}
+  {{ 'snippet-tag-custom.css' | asset_url | stylesheet_tag }}
+  {{ 'snippet-metafield-custom.css' | asset_url | stylesheet_tag }}
 
   {%- style -%}
     .section-{{ section.id }}-padding {
@@ -60,6 +62,16 @@
     <div class="grid__item product__media-wrapper">
       {% render 'product-media-gallery', variant_images: variant_images %}
       {% comment %} Column 1 {% endcomment %}
+      
+      <div class="tag__wrapper">
+        {%- if product.vendor-%}
+          {%- render 'tag-custom', text: product.vendor -%}
+        {%- endif-%}
+        {%- for collection in product.collections-%}
+          {%- render 'tag-custom', text: collection.title -%}
+        {%- endfor -%}
+      </div>
+
       <div class="custom-card custom-product__info-wrapper product__info-wrapper">
         {%- for block in section.blocks -%}
           {%- case block.type -%}
@@ -70,17 +82,18 @@
                   {{ product.description }}
                 </div>
               {%- endif -%}
+            {%- when 'metafields' -%}
+              {%- if product.metafields['custom'] != blank -%} 
+                <h3 class="block__title">Especificaciones</h3>
+                <div class="custom__metafields--wrapper">
+                  {%- for field in product.metafields['custom'] -%}
+                    {%- render 'metafield-custom', metafield: field -%}
+                  {%- endfor -%}
+                </div>
+              {% endif %}
           {%- endcase -%}
         {%- endfor -%}
-        <h3 class="block__title">Especificaciones</h3>
-        <div class="custom__metafields--wrapper">
-          {%- for field in product.metafields['custom'] -%}
-            <div class="custom__metafields--item">
-              <p> {{ field.first }}</p>
-              <p> {{ field.last }} {%- if field.first == "peso"-%}kg{%- endif -%}</p>
-            </div>
-          {%- endfor -%}
-        </div>
+
       </div>
     </div>
    
@@ -117,7 +130,7 @@
                   product: product,
                   use_variant: true,
                   show_badges: true,
-                  price_class: 'price--large price--large--custom'
+                  price_class: 'price--large'
                 -%}
               </div>
               {%- if shop.taxes_included or shop.shipping_policy.body != blank -%}
@@ -195,6 +208,24 @@
               </p>
             {%- when 'custom_liquid' -%}
               {{ block.settings.custom_liquid }}
+            {%- when 'collapsible_tab' -%}
+              <div class="product__accordion accordion quick-add-hidden" {{ block.shopify_attributes }}>
+                <details id="Details-{{ block.id }}-{{ section.id }}">
+                  <summary>
+                    <div class="summary__title">
+                      {% render 'icon-accordion', icon: block.settings.icon %}
+                      <h2 class="h4 accordion__title">
+                        {{ block.settings.heading | default: block.settings.page.title }}
+                      </h2>
+                    </div>
+                    {% render 'icon-caret' %}
+                  </summary>
+                  <div class="accordion__content rte" id="ProductAccordion-{{ block.id }}-{{ section.id }}">
+                    {{ block.settings.content }}
+                    {{ block.settings.page.content }}
+                  </div>
+                </details>
+              </div>
             {%- when 'quantity_selector' -%}
               <div
                 class="product-form__input product-form__quantity{% if settings.inputs_shadow_vertical_offset != 0 and settings.inputs_shadow_vertical_offset < 0 %} product-form__quantity-top{% endif %}"
@@ -376,9 +407,100 @@
                 {%- endif -%}
               </product-recommendations>
             {%- when 'icon-with-text' -%}
-              {% render 'icon-with-text',
-                block: block
-              %}
+              {%- liquid
+                assign heading_1_empty = false
+                assign heading_2_empty = false
+                assign heading_3_empty = false
+                assign text_only_all_items = true
+
+                if block.settings.heading_1 == empty
+                  assign heading_1_empty = true
+                endif
+
+                if block.settings.heading_2 == empty
+                  assign heading_2_empty = true
+                endif
+
+                if block.settings.heading_3 == empty
+                  assign heading_3_empty = true
+                endif
+
+                if heading_1_empty == false and block.settings.icon_1 != 'none' or block.settings.image_1 != null
+                  assign text_only_all_items = false
+                  elsif heading_2_empty == false and block.settings.icon_2 != 'none' or block.settings.image_2 != null
+                    assign text_only_all_items = false
+                  elsif heading_3_empty == false and block.settings.icon_3 != 'none' or block.settings.image_3 != null
+                    assign text_only_all_items = false
+                endif
+              -%}
+              <ul class="icon-with-text icon-with-text--{{ block.settings.layout }} list-unstyled{% if text_only_all_items %} icon-with-text--text-only{% endif %}" {{ block.shopify_attributes }}>
+                {%- unless heading_1_empty -%}
+                  <li class="icon-with-text__item">
+                    {%- if block.settings.image_1 == null -%}
+                      {%- render 'icon-accordion', icon: block.settings.icon_1 -%}
+                    {%- else -%}
+                      <img
+                        src="{{ block.settings.image_1 | image_url }}"
+                        {% if block.settings.image_1.alt != blank %}
+                          alt="{{ block.settings.image_1.alt | escape }}"
+                        {% else %}
+                          role="presentation"
+                        {% endif %}
+                        height="auto"
+                        width="auto"
+                        loading="lazy"
+                      >
+                    {%- endif -%}
+                    <span class="h4">
+                      {{- block.settings.heading_1 -}}
+                    </span>
+                  </li>
+                {%- endunless -%}
+                {%- unless heading_2_empty -%}
+                  <li class="icon-with-text__item">
+                    {%- if block.settings.image_2 == null -%}
+                      {% render 'icon-accordion', icon: block.settings.icon_2 -%}
+                    {%- else -%}
+                      <img
+                        src="{{ block.settings.image_2 | image_url }}"
+                        {% if block.settings.image_2.alt != blank %}
+                          alt="{{ block.settings.image_2.alt | escape }}"
+                        {% else %}
+                          role="presentation"
+                        {% endif %}
+                        height="auto"
+                        width="auto"
+                        loading="lazy"
+                      >
+                    {%- endif -%}
+                    <span class="h4">
+                      {{- block.settings.heading_2 -}}
+                    </span>
+                  </li>
+                {%- endunless -%}
+                {%- unless heading_3_empty -%}
+                  <li class="icon-with-text__item">
+                    {%- if block.settings.image_3 == null -%}
+                      {% render 'icon-accordion', icon: block.settings.icon_3 -%}
+                    {%- else -%}
+                      <img
+                        src="{{ block.settings.image_3 | image_url }}"
+                        {% if block.settings.image_3.alt != blank %}
+                          alt="{{ block.settings.image_3.alt | escape }}"
+                        {% else %}
+                          role="presentation"
+                        {% endif %}
+                        height="auto"
+                        width="auto"
+                        loading="lazy"
+                      >
+                    {%- endif -%}
+                    <span class="h4">
+                      {{- block.settings.heading_3 -}}
+                    </span>
+                  </li>
+                {%- endunless -%}
+              </ul>
           {%- endcase -%}
         {%- endfor -%}
         <a href="{{ product.url }}" class="link product__view-details animate-arrow">
@@ -676,6 +798,16 @@
     {
       "type": "description",
       "name": "t:sections.main-product.blocks.description.name",
+      "limit": 1
+    },
+    {
+      "type": "metafields",
+      "name": "Especificaciones",
+      "limit": 1
+    },
+    {
+      "type": "tags",
+      "name": "Etiquetas",
       "limit": 1
     },
     {

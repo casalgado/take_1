@@ -1,0 +1,25 @@
+.custom__metafields--item {
+  display: flex;
+}
+
+.custom__metafields--item > * {
+  border: 1px solid rgb(var(--color-background));
+  padding: 8px;
+}
+
+.custom__metafields--item > p:first-child {
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  background-color: rgb(var(--color-background));
+  color: #6c6b6a;
+  text-transform: capitalize;
+  flex-shrink: 0;
+  min-width: 65px;
+}
+
+.custom__metafields--item > p:last-child {
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  font-weight: bolder;
+  flex-grow: 1;
+}

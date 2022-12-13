@@ -1,0 +1,8 @@
+.custom-tag {
+  border-radius: 8px;
+  background-color: lightgray;
+  font-weight: bold;
+  font-size: 80%;
+  text-transform: uppercase;
+  padding: 4px 12px 4px 12px;
+}

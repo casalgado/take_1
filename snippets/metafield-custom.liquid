@@ -1,0 +1,17 @@
+{% comment %}
+  Renders metafields
+
+  Accepts:
+  - metafield: {Object} to render
+
+  Usage:
+  {% render 'metafields-custom', metafield: metafield %}
+{% endcomment %}
+
+<div class="custom__metafields--item">
+  <p>{{ metafield.first }}</p>
+  <p>
+    {{ metafield.last }}
+    {%- if metafield.first == 'peso' -%}kg{%- endif -%}
+  </p>
+</div>

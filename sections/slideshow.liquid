@@ -2,6 +2,7 @@
 {{ 'component-slider.css' | asset_url | stylesheet_tag }}
 {{ 'component-slideshow.css' | asset_url | stylesheet_tag }}
 {{ 'slideshow-custom.css' | asset_url | stylesheet_tag }}
+{{ 'snippet-spotlight-card.css' | asset_url | stylesheet_tag }}
 
 {% assign slide-blocks = section.blocks | where: 'type', 'slide' %}
 {% assign prod-blocks = section.blocks | where: 'type', 'product-spotlight' %}
