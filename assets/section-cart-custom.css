@@ -23,7 +23,7 @@
 .cart__banner--link,
 .cart__banner--link:visited,
 .cart__banner--link:focus {
-  color: rgb(var(--color-base-accent-1));
+  color: rgb(var(--color-base-accent-1)) !important;
   text-decoration: none;
 }
 
