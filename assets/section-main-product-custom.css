@@ -37,8 +37,14 @@
 .custom__metafields--wrapper {
   display: grid;
   gap: 15px;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   justify-items: stretch;
+}
+
+@media screen and (min-width: 750px) {
+  .custom__metafields--wrapper {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 /* Tag Styles */
