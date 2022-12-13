@@ -3007,6 +3007,15 @@ details-disclosure > details {
   }
 }
 
+/* Custom Styles */
+
+.custom__card {
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  background-color: white !important;
+}
+
 .tbr {
   border: 1px solid red !important;
 }
